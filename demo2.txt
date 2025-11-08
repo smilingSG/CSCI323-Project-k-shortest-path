@@ -1,0 +1,12 @@
+# DIRECTED
+# Coordinates
+A 0 0
+B 1 0
+C 2 0
+D 2 1
+
+# Edges (includes one negative edge)
+A B 2
+B C -1
+C D 2
+A D 6
