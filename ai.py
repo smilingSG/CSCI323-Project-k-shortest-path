@@ -349,7 +349,7 @@ def compare_and_recommend(
                     runtime_ms=t1 - t0,
                     k=k,
                     paths=checked,
-                    notes="heuristic K-best; ensure your implementation enforces simplicity if required",
+                    notes="heuristic K-best",
                     diversity=diversity_score(checked),
                 ))
             except Exception as e:
@@ -480,7 +480,7 @@ SAMPLE OUTPUT:
     2. cost=3.0, path=['A', 'B', 'C', 'D']
     3. cost=4.0, path=['A', 'B', 'D']
 
- - K*: 3 path(s) in 1.85 ms, best_cost=3.0, diversity=2.25 | heuristic K-best; ensure your implementation enforces simplicity if required
+ - K*: 3 path(s) in 1.85 ms, best_cost=3.0, diversity=2.25 | heuristic K-best;
     1. cost=3.0, path=['A', 'C', 'D']
     2. cost=3.0, path=['A', 'B', 'C', 'D']
     3. cost=4.0, path=['A', 'B', 'D']
