@@ -38,3 +38,9 @@
 - When prompted for number of K* / Yen paths, key in '3'
 - Allow the programme to run and produce the results
 - When prompted on whether you want the AI recommendation or not, key in 'y'
+
+# EXPECTED RESULTS (runtime values will differ)
+<img width="1195" height="804" alt="image" src="https://github.com/user-attachments/assets/81d8a9ab-0b45-4bec-b98d-5566eb535048" />
+<img width="1201" height="599" alt="image" src="https://github.com/user-attachments/assets/54093551-11c6-453b-b592-efce131eacb7" />
+<img width="2203" height="965" alt="image" src="https://github.com/user-attachments/assets/099661f2-9574-4c82-ba15-0a89533b2ce7" />
+
