@@ -204,6 +204,11 @@ def main():
     if ai_decision == "y":
         k = 3  # default to 3 paths
         G_dict = nx_to_dict(G)
+
+        # Detect negative edges again before deciding which algorithms to run
+        neg = has_negative_edge(G_dict)
+
+        # Run AI comparison respecting negative edge safety
         recommendation, _ = compare_and_recommend(
             G_dict, start, goal, k,
             yen_dijkstra_fn=yen_dijkstra_adapter,
@@ -211,12 +216,17 @@ def main():
             astar_fn=astar_adapter,
             kstar_fn=kstar_adapter,
             heuristic=default_heuristic,
+
+            # Disable unsafe algorithms when negative edges exist
+            run_yen_dijkstra=not neg,
+            run_yen_bellmanford=True,
+            run_astar=not neg,
+            run_kstar=not neg,
         )
         print(f"\n💡 AI Suggestion: {recommendation}")
 
     print("\nProgram finished. Goodbye!")
 
 
-# Entry Point program starts here
 if __name__ == "__main__":
     main()
