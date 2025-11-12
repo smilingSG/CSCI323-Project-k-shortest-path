@@ -361,23 +361,44 @@ def compare_and_recommend(
     res_map = {r.name: r for r in results}
 
     def pick_best(a: AlgoResult, b: AlgoResult) -> AlgoResult:
+        # If one failed and the other didn't
         if not a.ok and b.ok:
             return b
         if a.ok and not b.ok:
             return a
         if not a.ok and not b.ok:
+            return a  # arbitrary
+
+        # Both ok: compare BEST COST first
+        def _best_cost(r: AlgoResult):
+            return r.paths[0][0] if (r.ok and r.paths) else None
+
+        cost_a = _best_cost(a)
+        cost_b = _best_cost(b)
+        eps = 1e-9
+
+        # Handle missing costs
+        if cost_a is None and cost_b is not None:
+            return b
+        if cost_b is None and cost_a is not None:
             return a
-        # both ok: prefer faster; then higher diversity; then more paths
+
+        # Prefer lower best cost
+        if cost_a is not None and cost_b is not None and abs(cost_a - cost_b) > eps:
+            return a if cost_a < cost_b else b
+
+        # Tie-breakers when best costs are (almost) equal:
+        # 1) faster runtime
         if abs(a.runtime_ms - b.runtime_ms) > 1e-6:
             return a if a.runtime_ms < b.runtime_ms else b
+        # 2) higher diversity
         if abs(a.diversity - b.diversity) > 1e-6:
             return a if a.diversity > b.diversity else b
+        # 3) more paths (higher k)
         if a.k != b.k:
             return a if a.k > b.k else b
         return a
-    #if both algorithm failed
-    recommendation = "No algorithm produced a valid result."
-    rationale = ""
+
 
     if neg_edges:
         cands = [res_map.get("Yen(Bellman-Ford)"), res_map.get("K*")]
